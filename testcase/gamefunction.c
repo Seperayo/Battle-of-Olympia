@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "gameproperty.h"
 #include "turnqueue.h"
 #include "boolean.h"
@@ -7,7 +8,6 @@
 #include "point.h"
 #include "map.h"
 #include "pcolor.h"
-#include <stdio.h>
 #include "gamefunction.h"
 
 void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
@@ -15,27 +15,25 @@ void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
 	Unit A;
 	PlayerID = InfoHead(*Q).ID;
 
-	if (PlayerID==1) {
-		do {
-			printf("Enter the coordinate of empty castle = ");
-			scanf("%d %d",&x,&y);
-			if ( (Elmt(*M,x,y).UNITINFO.P != 1 || Elmt(*M,x,y).UNITINFO.P != 2) && ( x!= NBrsEff(*M)-2 && y!= 0 ) && ( x!= NBrsEff(*M)-2 && y!= 2 ) && ( x!= NBrsEff(*M)-1 && y!= 1 ) && ( x!= NBrsEff(*M)-3 && y!= 1 ) ) {
-				printf("That castle is occupied\n");
-			}
-		} while ( (Elmt(*M,x,y).UNITINFO.P != 1 || Elmt(*M,x,y).UNITINFO.P != 2) && ( x!= NBrsEff(*M)-2 && y!= 0 ) && ( x!= NBrsEff(*M)-2 && y!= 2 ) && ( x!= NBrsEff(*M)-1 && y!= 1 ) && ( x!= NBrsEff(*M)-3 && y!= 1 ) );
-	} else if (PlayerID==2) {
-		do {
-			printf("Enter the coordinate of empty castle = ");
-			scanf("%d %d",&x,&y);
-			if ( (Elmt(*M,x,y).UNITINFO.P != 1 || Elmt(*M,x,y).UNITINFO.P != 2) && ( x!= 0 && y!= NKolEff(*M) - 2 ) && ( x!= 2 && y!= NKolEff(*M) - 2 ) && ( x!= 1 && y!= NKolEff(*M) - 1 ) && ( x!= 1 && y!= NKolEff(*M) - 3 ) ) {
-				printf("That castle is occupied\n");
-			}
-		} while ( (Elmt(*M,x,y).UNITINFO.P != 1 || Elmt(*M,x,y).UNITINFO.P != 2) && ( x!= 0 && y!= NKolEff(*M) - 2 ) && ( x!= 2 && y!= NKolEff(*M) - 2 ) && ( x!= 1 && y!= NKolEff(*M) - 1 ) && ( x!= 1 && y!= NKolEff(*M) - 3 ) );
-	}
+    if (PlayerID==1) {
+        printf("Enter the coordinate of empty castle = ");
+        scanf("%d %d",&x,&y);
+        while ((Elmt(*M,x,y).UNITINFO.TYP != EMP)||(Elmt(*M,x,y).BLDINFO.ID != 1)){
+            printf("That castle is occupied!!!\n");
+            printf("Enter the coordinate of empty castle = ");
+            scanf("%d %d",&x,&y);
+        }
+    } else if (PlayerID==2) {
+        printf("Enter the coordinate of empty castle = ");
+        scanf("%d %d",&x,&y);
+        while ((Elmt(*M,x,y).UNITINFO.TYP != EMP)||(Elmt(*M,x,y).BLDINFO.ID != 2)){
+            printf("That castle is occupied!!!\n");
+            printf("Enter the coordinate of empty castle = ");
+            scanf("%d %d",&x,&y);
+        }
+    }
 
-	if (Elmt(*M,x,y).UNITINFO.P == 1 || Elmt(*M,x,y).UNITINFO.P == 2) {
-		printf("That castle is occupied\n");
-	} else {
+	if (Elmt(*M,x,y).UNITINFO.TYP == EMP && Elmt(*M,x,y).BLDINFO.ID == PlayerID) {
         printf("= = = = = = LIST OF RECRUITS = = = = = = \n");
         printf("1. Archer       | Health 29 | ATK 5 | 17G \n");
         printf("2. Swordsman    | Health 33 | ATK 4 | 14G \n");
@@ -49,7 +47,7 @@ void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
             } else if (i==2) {
                 printf("You have recruited a Swordsman \n");
             } else if (i==3) {
-                printf("You have recruited a Swordsman \n");
+                printf("You have recruited a White Mage \n");
             } else {
                 printf("ERROR. Enter the number again = \n");
             }
@@ -175,8 +173,6 @@ void InitializeQueue(Player * A, Player * B, MATRIKS * M, TurnQueue * Q)
     address K,L;
 
     InitializeTurnQueue(Q);
-    AddQ(Q,*A);
-    AddQ(Q,*B);
 
     CreateEmpty(&(*A).UNTLST);
     CreateEmptyB(&(*A).VLGLST);
@@ -199,7 +195,6 @@ void InitializeQueue(Player * A, Player * B, MATRIKS * M, TurnQueue * Q)
     (*A).INC = 0;
     (*A).OUT = 0;
     AlokasiQ(&K,(*A));
-    InfoHead(*Q) = (*A);
 
     CreateEmpty(&(*B).UNTLST);
     CreateEmptyB(&(*B).VLGLST);
@@ -221,10 +216,12 @@ void InitializeQueue(Player * A, Player * B, MATRIKS * M, TurnQueue * Q)
     (*B).INC = 0;
     (*B).OUT = 0;
     AlokasiQ(&L,(*B));
-    InfoTail(*Q) = (*B);
+
+    AddQ(Q,*A);
+    AddQ(Q,*B);
 }
 
-void fchange_unit(Player * P1, Player * P2, TurnQueue * Q, addressunit * X) {
+Unit fchange_unit(Player * P1, Player * P2, TurnQueue * Q) {
     int x,y,i,PlayerID;
 
     PlayerID = InfoHead(*Q).ID;
@@ -237,8 +234,8 @@ void fchange_unit(Player * P1, Player * P2, TurnQueue * Q, addressunit * X) {
     printf("Please enter the no. of unit you want to select: ");
     scanf("%d",&x);
     if (PlayerID==1) {
-        *X = SearchX((*P1).UNTLST,x);
+        return SearchX((*P1).UNTLST,x);
     } else if (PlayerID==2) {
-        *X = SearchX((*P2).UNTLST,x);
+        return SearchX((*P2).UNTLST,x);
     }
 }

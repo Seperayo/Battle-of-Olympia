@@ -143,7 +143,8 @@ void Menu(){
 	//BAGIAN MENU PROGRAM
 
 	Player P1,P2;
-	addressunit CurrUnit1,CurrUnit2,X;
+	addressunit X;
+	Unit CurrUnit1,CurrUnit2;
 	ListUnit LU1,LU2;
 	Stack S;
 	TurnQueue Q;
@@ -162,8 +163,9 @@ void Menu(){
 	MakeMATRIKS(B,K,&M);
 	InitializeMap(&M);
 	InitializeQueue(&P1,&P2,&M,&Q);
-	CurrUnit1 = FirstUnit(P1.UNTLST);
-	CurrUnit2 = FirstUnit(P2.UNTLST);
+
+	CurrUnit1 = InfoUnit(FirstUnit(P1.UNTLST));
+	CurrUnit2 = InfoUnit(FirstUnit(P2.UNTLST));
 
 	while (!IsKataSama(exit,pilihan)) {
 		while (!IsKataSama(end_turn,pilihan)) {
@@ -174,19 +176,19 @@ void Menu(){
 				printf("Income			: ");printf("%d\n",P1.INC);
 				printf("Upkeep			: ");printf("%d\n",P1.OUT);
 				printf("Unit			: ");
-				if (InfoUnit(CurrUnit1).TYP == 'K') {
+				if (CurrUnit1.TYP == 'K') {
 					printf("King \n");
-				} else if ( InfoUnit(CurrUnit1).TYP == 'A' ) {
+				} else if ( CurrUnit1.TYP == 'A' ) {
 					printf("Archer \n");
-				} else if ( InfoUnit(CurrUnit1).TYP == 'S' ) {
+				} else if ( CurrUnit1.TYP == 'S' ) {
 					printf("Swordsman \n");
-				} else if ( InfoUnit(CurrUnit1).TYP == 'W' ) {
+				} else if ( CurrUnit1.TYP == 'W' ) {
 					printf("White Mage \n");
 				}
-				printf("Health			: ");printf("%d\n",InfoUnit(CurrUnit1).HP);
-				printf("Movement Point		: ");printf("%d\n",InfoUnit(CurrUnit1).MOVEPTS);
+				printf("Health			: ");printf("%d\n",CurrUnit1.HP);
+				printf("Movement Point		: ");printf("%d\n",CurrUnit1.MOVEPTS);
 				printf("Can Attack? ");
-				if (InfoUnit(CurrUnit1).CHN) {
+				if (CurrUnit1.CHN) {
 					printf("Yes\n");
 				} else {
 					printf("No\n");
@@ -197,19 +199,19 @@ void Menu(){
 				printf("Income			: ");printf("%d\n",P2.INC);
 				printf("Upkeep			: ");printf("%d\n",P2.OUT);
 				printf("Unit			: ");
-				if (InfoUnit(CurrUnit2).TYP == 'K') {
+				if (CurrUnit2.TYP == 'K') {
 					printf("King \n");
-				} else if ( InfoUnit(CurrUnit2).TYP == 'A' ) {
+				} else if ( CurrUnit2.TYP == 'A' ) {
 					printf("Archer \n");
-				} else if ( InfoUnit(CurrUnit2).TYP == 'S' ) {
+				} else if ( CurrUnit2.TYP == 'S' ) {
 					printf("Swordsman \n");
-				} else if ( InfoUnit(CurrUnit2).TYP == 'W' ) {
+				} else if ( CurrUnit2.TYP == 'W' ) {
 					printf("White Mage \n");
 				}
-				printf("Health			: ");printf("%d\n",InfoUnit(CurrUnit2).HP);
-				printf("Movement Point		: ");printf("%d\n",InfoUnit(CurrUnit2).MOVEPTS);
+				printf("Health			: ");printf("%d\n",CurrUnit2.HP);
+				printf("Movement Point		: ");printf("%d\n",CurrUnit2.MOVEPTS);
 				printf("Can Attack? ");
-				if (InfoUnit(CurrUnit2).CHN) {
+				if (CurrUnit2.CHN) {
 					printf("Yes\n");
 				}
 				else {
@@ -223,23 +225,21 @@ void Menu(){
 			} else if (IsKataSama(recruit,pilihan)) {
 				frecruit(&P1,&P2,&M,&Q);
 			} else if (IsKataSama(change_unit,pilihan)) {
-				fchange_unit(&P1,&P2,&Q,&X);
 				if (CTurn==1) {
-					CurrUnit1 = X;
+					CurrUnit1 = fchange_unit(&P1,&P2,&Q);;
 				} else if (CTurn==2) {
-					CurrUnit2 = X;
+					CurrUnit2 = fchange_unit(&P1,&P2,&Q);;
 				}
 			} else if (IsKataSama(attack,pilihan)) {
 				printf("pilihan\n");
 			} else if (IsKataSama(map,pilihan)) {
 				if (CTurn==1) {
-					float X1 = InfoUnit(CurrUnit1).LOC.X;
-					float Y1 = InfoUnit(CurrUnit1).LOC.Y;
+					int X1 = CurrUnit1.LOC.X;
+					int Y1 = CurrUnit1.LOC.Y;
 					TulisMAP(&M,X1,Y1);
 				} else if (CTurn==2) {
-					X = CurrUnit2;
-					float X2 = InfoUnit(CurrUnit1).LOC.X;
-					float Y2 = InfoUnit(CurrUnit1).LOC.Y;
+					int X2 = CurrUnit2.LOC.X;
+					int Y2 = CurrUnit2.LOC.Y;
 					TulisMAP(&M,X2,Y2);
 				}
 			} else if (IsKataSama(info,pilihan)) {

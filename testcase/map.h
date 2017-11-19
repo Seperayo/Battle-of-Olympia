@@ -41,7 +41,7 @@ void MakeMATRIKS (int NB, int NK, MATRIKS * M);
 
 void InitializeMap (MATRIKS * M);
 
-void TulisMAP (MATRIKS * M, float X, float Y);
+void TulisMAP (MATRIKS * M, int x, int y);
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
    dipisahkan sebuah spasi */

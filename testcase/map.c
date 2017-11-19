@@ -38,7 +38,7 @@ void InitializeMap (MATRIKS * M) {
 	Elmt(*M,B-2,1).UNITINFO.PRB = PRB_KNG;
 	Elmt(*M,B-2,1).UNITINFO.CHN = true;
 	Elmt(*M,B-2,1).UNITINFO.PRC = PRC_OF_KNG;
-	Elmt(*M,B-2,1).UNITINFO.LOC.X = B-1;
+	Elmt(*M,B-2,1).UNITINFO.LOC.X = B-2;
 	Elmt(*M,B-2,1).UNITINFO.LOC.Y = 1;
 	Elmt(*M,B-2,1).UNITINFO.MOVEPTS = MAX_MOVE_KNG;
 	Elmt(*M,B-2,1).UNITINFO.MAXMOVE = MAX_MOVE_KNG;
@@ -136,7 +136,7 @@ void InitializeMap (MATRIKS * M) {
  	Elmt(*M,BV3,KV3).BLDINFO.TYP = VLG;
 }
 
-void TulisMAP (MATRIKS * M, float X, float Y) {
+void TulisMAP (MATRIKS * M, int x, int y) {
 	indeks i,j,nk,nb;
 	indeks koordinatbrs = 0,koordinatkol = 0;
 	
@@ -206,56 +206,44 @@ void TulisMAP (MATRIKS * M, float X, float Y) {
 					//Menuliskan Jenis Unit
 					else if( (((j-1)%4 == 3) && ((i-1)%4 == 3)) ){
 						if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == 1) {
-							if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X != X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_red('K');
-								} else {
+							if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == x) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == y) ) {
+								if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
 									print_green('K');
-								}
-							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 									print_green('A');
-								} else {
-									print_red('A');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+									print_green('S');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+									print_green('W');
 								}
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+								print_red('K');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+								print_red('A');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_green('S');
-								} else {
-									print_red('S');
-								}
+								print_red('S');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_green('S');
-								} else {
-									print_red('S');
-								}
+								print_red('W');
 							}
 						} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == 2) {
-							if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
+							if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == x && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == y ) {
+								if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
 									print_green('K');
-								} else {
-									print_blue('K');
-								}
-							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 									print_green('A');
-								} else {
-									print_blue('A');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+									print_green('S');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+									print_green('W');
 								}
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+								print_blue('K');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+								print_blue('A');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_green('S');
-								} else {
-									print_blue('S');
-								}
+								print_blue('S');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_green('S');
-								} else {
-									print_blue('S');
-								}
+								print_blue('W');
 							}
 						} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == -1) {
 							printf(" ");
@@ -274,6 +262,7 @@ void TulisMAP (MATRIKS * M, float X, float Y) {
 		}
 	}
 }
+
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
    dipisahkan sebuah spasi */

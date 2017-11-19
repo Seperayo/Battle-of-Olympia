@@ -104,7 +104,7 @@ addressunit Search (ListUnit L, Unit X);
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
 
-addressunit SearchX (ListUnit L, int X);
+Unit SearchX (ListUnit L, int X);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/

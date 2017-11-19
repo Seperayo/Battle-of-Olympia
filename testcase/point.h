@@ -32,7 +32,7 @@ void BacaPOINT (POINT * P);
 /* F.S. P terdefinisi */
 
 // Tulis Point
-
+void TulisPOINT (POINT P);
 /* *** Kelompok menentukan di mana P berada *** */
 boolean EQ (POINT P1, POINT P2);
 /* Mengirimkan true jika P1 = P2 : absis dan ordinatnya sama */

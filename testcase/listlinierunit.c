@@ -62,7 +62,7 @@ addressunit Search (ListUnit L, Unit X)
 	}
 }
 
-addressunit SearchX (ListUnit L, int X)
+Unit SearchX (ListUnit L, int X)
 {
 	addressunit P;
 	int i,k;
@@ -71,7 +71,7 @@ addressunit SearchX (ListUnit L, int X)
 	k=1;
 	for (i=1;i<=NbElmt(L);i++) {
         if (k==X) {
-			return P;
+			return InfoUnit(P);
 		}
 		P=NextUnit(P);
 		k++;

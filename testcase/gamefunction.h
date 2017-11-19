@@ -11,6 +11,6 @@
 
 void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q);
 void InitializeQueue(Player * A, Player * B, MATRIKS * M, TurnQueue *Q);
-void fchange_unit(Player * P1, Player * P2, TurnQueue *Q, addressunit *X);
+Unit fchange_unit(Player * P1, Player * P2, TurnQueue *Q);
 
 #endif
