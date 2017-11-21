@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+<<<<<<< HEAD
+=======
+#include <conio.h>
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 #include "math.h"
 #include "boolean.h"
 #include "gameproperty.h"
 #include "mesinkar.h"
 #include "mesinkata.h"
 #include "point.h"
+<<<<<<< HEAD
 #include "map.h"
 #include "pcolor.h"
 #include "stackunit.h"
@@ -34,26 +39,61 @@ void EmptyToEksternal(){
 	pita = fopen("input.txt","w");
 	putc('.',pita);
 	fclose(pita);
+=======
+/*
+void Credits();
+void InputToEksternal();
+void EksternalToInput(Kata *pilihan);
+boolean IsKataSama(Kata K1, Kata K2);
+void Display();
+void Menu();
+*/
+void Credits(){
+	printf("\nKelompok Seksi Gorengan\n");
+	printf("Aldo Azali........13516125\n");
+	printf("Ivan Jonathan.....13516\n");
+	printf("Shevalda..........13516\n");
+	printf("Seperayo..........13516\n");
+	printf("Hafizh Budiman....13516\n\n");
+	printf("Dosen : Bu Yani\n");
+	getch();
+	printf("\n");
+	Display();
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 }
 
 void InputToEksternal(){
 	FILE * pita;
 	char ch;
+<<<<<<< HEAD
 	scanf("%c",&ch);
 	pita = fopen("input.txt","w");
 	while(ch!='\n'){
+=======
+	pita = fopen("input.txt","w");
+	while((ch = getchar())!='\n'){
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 		if(!(ch=='1') && !(ch=='2') && !(ch=='3') && !(ch=='4') && !(ch=='5') && !(ch=='6') && !(ch=='7') & !(ch=='8') && !(ch=='9') && !(ch=='0')){
 			ch&='_';
 		}
 		putc(ch,pita);
+<<<<<<< HEAD
 		scanf("%c",&ch);
+=======
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 	}
 	putc('.',pita);
 	fclose(pita);
 }
 
+<<<<<<< HEAD
 void EksternalToInput(Kata *pilihan){ 	
 	STARTKATA();
+=======
+void EksternalToInput(Kata *pilihan){
+	STARTKATA();
+	
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 	*pilihan = CKata;
 }
 
@@ -77,6 +117,7 @@ boolean IsKataSama(Kata K1, Kata K2){
 	return bool;
 }
 
+<<<<<<< HEAD
 void SaveGame(Player P1, Player P2, addressunit X, Unit CurrUnit1, Unit CurrUnit2, ListUnit LU1, ListUnit LU2, Stack S, TurnQueue Q, MATRIKS M){
 	FILE * save;
 	char spasi=' ';
@@ -117,6 +158,17 @@ void Menu(int *option){
 	Kata start,load,exit,satu,dua,tiga;
 	Kata credit,empat;
 	char junk;
+=======
+void Display(){
+	printf("\nWelcome to Battle For Olympia !!\n\n");
+	Menu();
+}
+
+void Menu(){
+	Kata pilihan;
+	Kata start,load,exit,satu,dua,tiga;
+	Kata credit,empat;
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 	
 	//BAGIAN ASSIGN STRING PILIHAN
 	start.TabKata[1]='S';
@@ -151,6 +203,7 @@ void Menu(int *option){
 	tiga.Length=1;
 	empat.TabKata[1]='4';
 	empat.Length=1;
+<<<<<<< HEAD
 
 	scanf("%c",&junk); // Membuang karakter enter berlebihan dari user agar Input menu tidak error
 	//BAGIAN MENU PROGRAM
@@ -377,10 +430,38 @@ void StartGame(Player P1, Player P2, addressunit X, Unit CurrUnit1, Unit CurrUni
 	/*	printf("\nGame Command : ");
 		InputToEksternal();
 		EksternalToInput(&pilihan);*/
+=======
+	
+	//BAGIAN MENU PROGRAM
+	printf("********************\n");
+	printf("* START........[1] *\n* LOAD.........[2] *\n* CREDITS......[3] *\n* EXIT.........[4] *\n"); //Menu Pilihan
+	printf("********************\n");
+	printf("\nWhat do you want to do? : ");
+	InputToEksternal();
+	EksternalToInput(&pilihan);
+	if(IsKataSama(start,pilihan) || IsKataSama(satu,pilihan)){
+		printf("Starting Game\n");
+	}
+	else if(IsKataSama(load,pilihan) || IsKataSama(dua,pilihan)){
+		printf("Loading Previous Game\n");
+	}
+	else if(IsKataSama(credit,pilihan) || IsKataSama(tiga,pilihan)){
+		Credits();
+	}
+	else if(IsKataSama(exit,pilihan) || IsKataSama(empat,pilihan)){
+		printf("Exiting the Game\n");
+	}
+	else{
+		printf("Input ERROR !!!\n");
+		getch();
+		printf("\n\n");
+		Menu();
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 	}
 }
 
 int main(){
+<<<<<<< HEAD
 	int option; //Variabel untuk Menu
 	/*Variabel untuk start game */
 	Player P1,P2;
@@ -414,3 +495,45 @@ int main(){
 	printf("Exiting the Game\n");
 	return 0;
 }
+=======
+	Display();
+	
+	return 0;
+}
+/*
+int main() {
+    Unit A,B;
+    ListUnit L;
+
+    CreateEmpty(&L);
+    A.MAXHP = 53;
+    A.HP = 53;
+    A.ATK = 7;
+    A.MAXMOVE = 13;
+    A.MOVEPTS = 13;
+    A.PRC = 1000;
+    A.RNG = 1;
+    A.RNGTYP = 'm';
+    A.TYP = 'K';
+    A.CHN = 0.8;
+    A.P = 1;
+    InsVFirst(&L,A);
+
+    B.MAXHP = 29;
+    B.HP = 29;
+    B.ATK = 5;
+    B.MAXMOVE = 7;
+    B.MOVEPTS = 7;
+    B.PRC = 17;
+    B.RNG = 1;
+    B.RNGTYP = 'r';
+    B.TYP = 'A';
+    B.CHN = 0.5;
+    B.P = 1;
+    InsVFirst(&L,B);
+
+    PrintInfo(L);
+    printf("\nwtf nigga\n");
+}
+*/
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418

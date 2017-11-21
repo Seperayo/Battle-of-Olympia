@@ -251,6 +251,7 @@ void TulisMAP (MATRIKS * M, int x, int y) {
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 									print_green('A');
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+<<<<<<< HEAD
 									print_green('S');
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
 									print_green('W');
@@ -358,11 +359,14 @@ void TulisMAPJarak (MATRIKS * M, Unit U) {
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 									print_green('A');
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+=======
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 									print_green('S');
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
 									print_green('W');
 								}
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+<<<<<<< HEAD
 								print_red('K');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 								print_red('A');
@@ -389,6 +393,14 @@ void TulisMAPJarak (MATRIKS * M, Unit U) {
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
 								print_blue('S');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+=======
+								print_blue('K');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+								print_blue('A');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+								print_blue('S');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 								print_blue('W');
 							}
 						} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == -1) {
@@ -447,6 +459,7 @@ void TulisMAPJarak (MATRIKS * M, Unit U) {
 	}
 }
 
+<<<<<<< HEAD
 int SearchID(MATRIKS * M, int x, int y) {
 	boolean found;
 	int i,j;
@@ -467,6 +480,8 @@ int SearchID(MATRIKS * M, int x, int y) {
 	return Elmt(*M,i,j).UNITINFO.P;
 }
 
+=======
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
    dipisahkan sebuah spasi */

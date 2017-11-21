@@ -29,6 +29,7 @@ void fattack(Player *P1, Player *P2, MATRIKS *M, TurnQueue *Q) {
 		x3 = x, y3 = y + 1;
 		printf("\nPlease select enemy you want to attack : \n");
 
+<<<<<<< HEAD
 		/*Check di map*/
 		if ((x - 1) >= 0) { //check di atas CurrUnit1, ada musuh atau tidak
 			if ((Elmt((*M), x - 1, y).UNITINFO.P != 1) && (Elmt((*M), x - 1, y).UNITINFO.TYP != EMP)) {
@@ -595,6 +596,27 @@ void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
     }
 
 	if ((Elmt(*M,x,y).UNITINFO.TYP == EMP && Elmt(*M,x,y).BLDINFO.ID == PlayerID && PlayerID==1 && Elmt(*M,NBrsEff(*M)-2,1).UNITINFO.TYP == KNG)||(Elmt(*M,x,y).UNITINFO.TYP == EMP && Elmt(*M,x,y).BLDINFO.ID == PlayerID && PlayerID==2 && Elmt(*M,1,NKolEff(*M)-2).UNITINFO.TYP == KNG)) {
+=======
+    if (PlayerID==1) {
+        printf("Enter the coordinate of empty castle = ");
+        scanf("%d %d",&x,&y);
+        while ((Elmt(*M,x,y).UNITINFO.TYP != EMP)||(Elmt(*M,x,y).BLDINFO.ID != 1)){
+            printf("That castle is occupied!!!\n");
+            printf("Enter the coordinate of empty castle = ");
+            scanf("%d %d",&x,&y);
+        }
+    } else if (PlayerID==2) {
+        printf("Enter the coordinate of empty castle = ");
+        scanf("%d %d",&x,&y);
+        while ((Elmt(*M,x,y).UNITINFO.TYP != EMP)||(Elmt(*M,x,y).BLDINFO.ID != 2)){
+            printf("That castle is occupied!!!\n");
+            printf("Enter the coordinate of empty castle = ");
+            scanf("%d %d",&x,&y);
+        }
+    }
+
+	if (Elmt(*M,x,y).UNITINFO.TYP == EMP && Elmt(*M,x,y).BLDINFO.ID == PlayerID) {
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
         printf("= = = = = = LIST OF RECRUITS = = = = = = \n");
         printf("1. Archer       | Health 29 | ATK 5 | 17G \n");
         printf("2. Swordsman    | Health 33 | ATK 4 | 14G \n");
@@ -786,13 +808,25 @@ void InitializeQueue(Player * A, Player * B, MATRIKS * M, TurnQueue * Q)
     AddQ(Q,*B);
 }
 
+<<<<<<< HEAD
 Unit fchange_unit(Player P) {
+=======
+Unit fchange_unit(Player * P1, Player * P2, TurnQueue * Q) {
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
     int x,y,i,PlayerID;
 
     printf("\n====== LIST OF UNITS ======\n");
     PrintInfo((P).UNTLST);
     printf("Please enter the no. of unit you want to select: ");
     scanf("%d",&x);
+<<<<<<< HEAD
     return SearchX((P).UNTLST,x);
     
+=======
+    if (PlayerID==1) {
+        return SearchX((*P1).UNTLST,x);
+    } else if (PlayerID==2) {
+        return SearchX((*P2).UNTLST,x);
+    }
+>>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 }
