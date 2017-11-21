@@ -22,12 +22,16 @@ void InitializeMap (MATRIKS * M) {
 	B = NBrsEff(*M);
 	K = NKolEff(*M);
 
-	for (i=0;i<=B;i++) {
-		for (j=0;j<=K;j++) {
+	for (i=0;i<=(B*4)+2;i++) {
+		for (j=0;j<=(K*4)+2;j++) {
 			Elmt(*M,i,j).UNITINFO.TYP = EMP;
 			Elmt(*M,i,j).UNITINFO.P = -1;
 			Elmt(*M,i,j).BLDINFO.TYP = EMPB;
 			Elmt(*M,i,j).BLDINFO.ID = -1;
+			if ( (((j-1)%4 == 3) && ((i-1)%4 == 3)) ) {
+				Elmt(*M,(i-3)/4,(j-4)/4).UNITINFO.LOC.X = (i-3)/4;
+				Elmt(*M,(i-3)/4,(j-4)/4).UNITINFO.LOC.Y = (j-4)/4;
+			}
 		}
 	}
 	
@@ -38,13 +42,28 @@ void InitializeMap (MATRIKS * M) {
 	Elmt(*M,B-2,1).UNITINFO.PRB = PRB_KNG;
 	Elmt(*M,B-2,1).UNITINFO.CHN = true;
 	Elmt(*M,B-2,1).UNITINFO.PRC = PRC_OF_KNG;
-	Elmt(*M,B-2,1).UNITINFO.LOC.X = B-1;
+	Elmt(*M,B-2,1).UNITINFO.LOC.X = B-2;
 	Elmt(*M,B-2,1).UNITINFO.LOC.Y = 1;
 	Elmt(*M,B-2,1).UNITINFO.MOVEPTS = MAX_MOVE_KNG;
 	Elmt(*M,B-2,1).UNITINFO.MAXMOVE = MAX_MOVE_KNG;
 	Elmt(*M,B-2,1).UNITINFO.ATK = ATK_KNG;
  	Elmt(*M,B-2,1).UNITINFO.HP = MAX_HP_KNG;
  	Elmt(*M,B-2,1).UNITINFO.MAXHP = MAX_HP_KNG;
+
+	/*#cheat*/
+	//Elmt(*M, B - 1, 1).UNITINFO.P = 2;
+	//Elmt(*M, B - 1, 1).UNITINFO.TYP = ARC;
+	//Elmt(*M, B - 1, 1).UNITINFO.RNGTYP = RANGE;
+	//Elmt(*M, B - 1, 1).UNITINFO.PRB = PRB_ARC;
+	//Elmt(*M, B - 1, 1).UNITINFO.CHN = true;
+	//Elmt(*M, B - 1, 1).UNITINFO.PRC = PRC_OF_ARC;
+	//Elmt(*M, B - 1, 1).UNITINFO.LOC.X = B - 1;
+	//Elmt(*M, B - 1, 1).UNITINFO.LOC.Y = 1;
+	//Elmt(*M, B - 1, 1).UNITINFO.MOVEPTS = MAX_MOVE_ARC;
+	//Elmt(*M, B - 1, 1).UNITINFO.MAXMOVE = MAX_MOVE_ARC;
+	//Elmt(*M, B - 1, 1).UNITINFO.ATK = ATK_ARC;
+	//Elmt(*M, B - 1, 1).UNITINFO.HP = MAX_HP_ARC;
+	//Elmt(*M, B - 1, 1).UNITINFO.MAXHP = MAX_HP_ARC;
 
  	Elmt(*M,B-2,1).BLDINFO.ID = 1;
  	Elmt(*M,B-2,1).BLDINFO.LOC.X = B-2;
@@ -136,7 +155,7 @@ void InitializeMap (MATRIKS * M) {
  	Elmt(*M,BV3,KV3).BLDINFO.TYP = VLG;
 }
 
-void TulisMAP (MATRIKS * M, float X, float Y) {
+void TulisMAP (MATRIKS * M, int x, int y) {
 	indeks i,j,nk,nb;
 	indeks koordinatbrs = 0,koordinatkol = 0;
 	
@@ -185,7 +204,7 @@ void TulisMAP (MATRIKS * M, float X, float Y) {
 							} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == CST) {
 								print_red('C');
 							} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == VLG) {
-								printf("V");
+								print_red('V');
 							}
 						} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.ID == 2) {
 							if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == TWR) {
@@ -193,7 +212,7 @@ void TulisMAP (MATRIKS * M, float X, float Y) {
 							} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == CST) {
 								print_blue('C');
 							} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == VLG) {
-								printf("V");
+								print_blue('V');
 							}
 						} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.ID == 0) {
 							if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == VLG) {
@@ -206,56 +225,44 @@ void TulisMAP (MATRIKS * M, float X, float Y) {
 					//Menuliskan Jenis Unit
 					else if( (((j-1)%4 == 3) && ((i-1)%4 == 3)) ){
 						if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == 1) {
-							if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X != X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_red('K');
-								} else {
+							if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == x) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == y) ) {
+								if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
 									print_green('K');
-								}
-							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 									print_green('A');
-								} else {
-									print_red('A');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+									print_green('S');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+									print_green('W');
 								}
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+								print_red('K');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+								print_red('A');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_green('S');
-								} else {
-									print_red('S');
-								}
+								print_red('S');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_green('S');
-								} else {
-									print_red('S');
-								}
+								print_red('W');
 							}
 						} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == 2) {
-							if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
+							if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == x && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == y ) {
+								if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
 									print_green('K');
-								} else {
-									print_blue('K');
-								}
-							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 									print_green('A');
-								} else {
-									print_blue('A');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+									print_green('S');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+									print_green('W');
 								}
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+								print_blue('K');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+								print_blue('A');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_green('S');
-								} else {
-									print_blue('S');
-								}
+								print_blue('S');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
-								if ( Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == X && Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == Y  ) {
-									print_green('S');
-								} else {
-									print_blue('S');
-								}
+								print_blue('W');
 							}
 						} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == -1) {
 							printf(" ");
@@ -274,6 +281,192 @@ void TulisMAP (MATRIKS * M, float X, float Y) {
 		}
 	}
 }
+
+void TulisMAPJarak (MATRIKS * M, Unit U) {
+	indeks i,j,nk,nb;
+	indeks koordinatbrs = 0,koordinatkol = 0;
+	
+	nb = 4*NBrsEff(*M)+2; //jumlah total indeks baris untuk membuat Map 
+	nk = 4*NKolEff(*M)+2; //jumlah total indeks kolom untuk membuat Map
+
+	if(nk!=0 && nb !=0){
+		for(i=1;i<=nb;i++){
+			for(j=1;j<=nk;j++){
+				if(i == 1){ //Mengeluarkan output angka-angka koordinat kolom
+					if (j==1) {
+						printf("  ");
+					}
+					if((j-1)%4 == 3){
+						printf("%d",koordinatkol);
+						if(koordinatkol/10 > 0){
+							j++;
+						}
+						koordinatkol++;
+					}
+					else{
+						printf(" ");
+					}
+				} else {
+					// Menuliskan angka koordinat baris
+					if( ((i-1)%4 == 3) && (j == 1) ){
+						if (koordinatbrs<10) {
+							printf("%d  ",koordinatbrs);
+						} else {
+							printf("%d ",koordinatbrs);
+						}
+						koordinatbrs++;
+					}
+					// Membentuk * di dalam MAP
+					else if( (((i-1)%4 == 1) && (j!=1))  || ((j-1)%4 == 1) || (j == nk) || (i == nb) ){
+						if ((i==nb)&&(j==1)) {
+							printf("   ");
+						}
+						printf("*");
+					}
+					// Menuliskan Jenis Building
+					else if ( (((j-1)%4 == 3) && ((i-1)%4 == 2)) ) {
+						if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.ID == 1) {
+							if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == TWR) {
+								print_red('T');
+							} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == CST) {
+								print_red('C');
+							} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == VLG) {
+								print_red('V');
+							}
+						} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.ID == 2) {
+							if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == TWR) {
+								print_blue('T');
+							} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == CST) {
+								print_blue('C');
+							} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == VLG) {
+								print_blue('V');
+							}
+						} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.ID == 0) {
+							if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.TYP == VLG) {
+								printf("V");
+							}
+						} else if (Elmt(*M,(i-3)/4,(j-4)/4).BLDINFO.ID == -1) {
+							printf(" ");
+						}
+					}
+					//Menuliskan Jenis Unit
+					else if( (((j-1)%4 == 3) && ((i-1)%4 == 3)) ){
+						if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == 1) {
+							if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y) ) {
+								if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+									print_green('K');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+									print_green('A');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+									print_green('S');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+									print_green('W');
+								}
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+								print_red('K');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+								print_red('A');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+								print_red('S');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+								print_red('W');
+							}
+						} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == 2) {
+							if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y) ) {
+								if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+									print_green('K');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+									print_green('A');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+									print_green('S');
+								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+									print_green('W');
+								}
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
+								print_blue('K');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
+								print_blue('A');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
+								print_blue('S');
+							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
+								print_blue('W');
+							}
+						} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == -1) {
+							if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X)&&(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y - U.LOC.Y == 2)) {
+								int PID = SearchID(M,Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X,(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y)-1);
+								if ((PID == -1)||(PID == U.P)) {
+									printf("#");
+								} 
+							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X)&&(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y - U.LOC.Y == 1)) {
+								printf("#");
+							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y)&&(U.LOC.X - Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == 2)) {
+								int PID = SearchID(M,(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X)+1,Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y);
+								if ((PID == -1)||(PID == U.P)) {
+									printf("#");
+								} 
+							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y)&&(U.LOC.X - Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == 1)) {
+								printf("#");
+							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X)&&(U.LOC.Y - Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == 2)) {
+								int PID = SearchID(M,Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X,(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y)+1);
+								if ((PID == -1)||(PID == U.P)) {
+									printf("#");
+								} 
+							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X)&&(U.LOC.Y - Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == 1)) {
+								printf("#");
+							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y)&&(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X - U.LOC.X == 2)) {
+								int PID = SearchID(M,(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X)-1,Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y);
+								if ((PID == -1)||(PID == U.P)) {
+									printf("#");
+								} 
+							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y)&&(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X - U.LOC.X == 1)) {
+								printf("#");
+							} else if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X + 1) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y + 1) ) {
+								printf("#");
+							} else if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X + 1) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y - 1) ) {
+								printf("#");
+							} else if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X - 1) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y - 1) ) {
+								printf("#");
+							} else if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X - 1) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y + 1) ) {
+								printf("#");
+							} else {
+								printf(" ");
+							}
+						}
+					}
+					// Kosong
+					else if (j==1) {
+						printf("   ");
+					}
+					else {
+						printf(" ");
+					}
+				}
+			}
+			printf("\n");
+		}
+	}
+}
+
+int SearchID(MATRIKS * M, int x, int y) {
+	boolean found;
+	int i,j;
+
+	found = false;
+	i=0;
+	while (i<=NBrsEff(*M) && !found) {
+		j=0;
+		while (j<=NKolEff(*M) && !found) {
+			if (Elmt(*M,i,j).UNITINFO.LOC.X == x && Elmt(*M,i,j).UNITINFO.LOC.Y == y) {
+				found = true;
+			} else {
+				j++;
+			}
+		}
+		i++;
+	}
+	return Elmt(*M,i,j).UNITINFO.P;
+}
+
 /* I.S. M terdefinisi */
 /* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
    dipisahkan sebuah spasi */

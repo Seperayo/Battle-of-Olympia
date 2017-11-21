@@ -14,10 +14,10 @@
 #define MAX_HP_SWD 33
 #define MAX_HP_KNG 53
 #define MAX_HP_WHT 26
-#define MAX_MOVE_ARC 7
-#define MAX_MOVE_SWD 10
-#define MAX_MOVE_KNG 13
-#define MAX_MOVE_WHT 7
+#define MAX_MOVE_ARC 2
+#define MAX_MOVE_SWD 2
+#define MAX_MOVE_KNG 2
+#define MAX_MOVE_WHT 2
 #define PRC_OF_ARC 17
 #define PRC_OF_SWD 13
 #define PRC_OF_KNG 0
@@ -103,8 +103,8 @@ addressunit Search (ListUnit L, Unit X);
 /* Mencari apakah ada elemen list dengan InfoUnit(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
-
-addressunit SearchX (ListUnit L, int X);
+Unit SearchUnit (ListUnit L, Unit X);
+Unit SearchX (ListUnit L, int X);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/

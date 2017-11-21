@@ -62,7 +62,24 @@ addressunit Search (ListUnit L, Unit X)
 	}
 }
 
-addressunit SearchX (ListUnit L, int X)
+Unit SearchUnit (ListUnit L, Unit X)
+/* Mencari apakah ada elemen list dengan InfoUnit(P)= X */
+/* Jika ada, mengirimkan address elemen tersebut. */
+/* Jika tidak ada, mengirimkan Nil */
+{
+	addressunit P;
+
+	if (IsEmpty(L)) {
+	} else {
+		P=FirstUnit(L);
+		while ( NextUnit(P)!=Nil && (!IsUnitSama(InfoUnit(P),X))) {
+			P=NextUnit(P);
+		}
+		if (X.TYP==InfoUnit(P).TYP) { return InfoUnit(P); }
+	}
+}
+
+Unit SearchX (ListUnit L, int X)
 {
 	addressunit P;
 	int i,k;
@@ -71,7 +88,8 @@ addressunit SearchX (ListUnit L, int X)
 	k=1;
 	for (i=1;i<=NbElmt(L);i++) {
         if (k==X) {
-			return P;
+			NextUnit(P) = Nil;
+			return InfoUnit(P);
 		}
 		P=NextUnit(P);
 		k++;

@@ -58,6 +58,17 @@ void Display(){
 	Menu();
 }
 
+void checkWinner(ListUnit P1UnitList, ListUnit P2UnitList) {
+	if (IsEmpty(P1UnitList)) {
+		Dealokasi(&(FirstUnit(P2UnitList)));
+		printf("\n Hooraayy!! Player 2 wins the game..\nCongratulations Player 2!.");
+	}
+	else {
+		Dealokasi(&(FirstUnit(P1UnitList)));
+		printf("\n Hooraayy!! Player 1 wins the game..\nCongratulations Player 1!.");
+	}
+}
+
 void Menu(){
 	Kata pilihan;
 	Kata start,load,save,exit,move,undo,recruit,change_unit,attack,map,info,end_turn;
@@ -143,8 +154,7 @@ void Menu(){
 	//BAGIAN MENU PROGRAM
 
 	Player P1,P2;
-	addressunit CurrUnit1,CurrUnit2,X;
-	ListUnit LU1,LU2;
+	Unit CurrUnit1,CurrUnit2;
 	Stack S;
 	TurnQueue Q;
 	MATRIKS M;
@@ -162,102 +172,162 @@ void Menu(){
 	MakeMATRIKS(B,K,&M);
 	InitializeMap(&M);
 	InitializeQueue(&P1,&P2,&M,&Q);
-	CurrUnit1 = FirstUnit(P1.UNTLST);
-	CurrUnit2 = FirstUnit(P2.UNTLST);
 
-	while (!IsKataSama(exit,pilihan)) {
-		while (!IsKataSama(end_turn,pilihan)) {
+	CurrUnit1 = InfoUnit(FirstUnit(P1.UNTLST));
+	CurrUnit2 = InfoUnit(FirstUnit(P2.UNTLST));
+
+	while (!IsKataSama(exit, pilihan)) {
+		while (!IsKataSama(end_turn, pilihan)) {
 			CTurn = InfoHead(Q).ID;
-			if (CTurn==1) {
-				printf("\nPlayer %d's Turn\n",P1.ID);
-				printf("Cash			: ");printf("%d\n",P1.GLD);
-				printf("Income			: ");printf("%d\n",P1.INC);
-				printf("Upkeep			: ");printf("%d\n",P1.OUT);
+			if (CTurn == 1) {
+				printf("\nPlayer %d's Turn\n", P1.ID);
+				printf("Cash			: "); printf("%d\n", P1.GLD);
+				printf("Income			: "); printf("%d\n", P1.INC);
+				printf("Upkeep			: "); printf("%d\n", P1.OUT);
 				printf("Unit			: ");
-				if (InfoUnit(CurrUnit1).TYP == 'K') {
+				if (CurrUnit1.TYP == 'K') {
 					printf("King \n");
-				} else if ( InfoUnit(CurrUnit1).TYP == 'A' ) {
+				}
+				else if (CurrUnit1.TYP == 'A') {
 					printf("Archer \n");
-				} else if ( InfoUnit(CurrUnit1).TYP == 'S' ) {
+				}
+				else if (CurrUnit1.TYP == 'S') {
 					printf("Swordsman \n");
-				} else if ( InfoUnit(CurrUnit1).TYP == 'W' ) {
+				}
+				else if (CurrUnit1.TYP == 'W') {
 					printf("White Mage \n");
 				}
-				printf("Health			: ");printf("%d\n",InfoUnit(CurrUnit1).HP);
-				printf("Movement Point		: ");printf("%d\n",InfoUnit(CurrUnit1).MOVEPTS);
+				printf("Health			: "); printf("%d\n", CurrUnit1.HP);
+				printf("Movement Point		: "); printf("%d\n", CurrUnit1.MOVEPTS);
 				printf("Can Attack? ");
-				if (InfoUnit(CurrUnit1).CHN) {
-					printf("Yes\n");
-				} else {
-					printf("No\n");
-				}
-			} else if (CTurn==2) {
-				printf("\nPlayer %d's Turn\n",P2.ID);
-				printf("Cash			: ");printf("%d\n",P2.GLD);
-				printf("Income			: ");printf("%d\n",P2.INC);
-				printf("Upkeep			: ");printf("%d\n",P2.OUT);
-				printf("Unit			: ");
-				if (InfoUnit(CurrUnit2).TYP == 'K') {
-					printf("King \n");
-				} else if ( InfoUnit(CurrUnit2).TYP == 'A' ) {
-					printf("Archer \n");
-				} else if ( InfoUnit(CurrUnit2).TYP == 'S' ) {
-					printf("Swordsman \n");
-				} else if ( InfoUnit(CurrUnit2).TYP == 'W' ) {
-					printf("White Mage \n");
-				}
-				printf("Health			: ");printf("%d\n",InfoUnit(CurrUnit2).HP);
-				printf("Movement Point		: ");printf("%d\n",InfoUnit(CurrUnit2).MOVEPTS);
-				printf("Can Attack? ");
-				if (InfoUnit(CurrUnit2).CHN) {
+				if (CurrUnit1.CHN) {
 					printf("Yes\n");
 				}
 				else {
 					printf("No\n");
 				}
 			}
-			if (IsKataSama(move,pilihan)) {
-				printf("pilihan\n");
-			} else if (IsKataSama(undo,pilihan)) {
-				printf("pilihan\n");
-			} else if (IsKataSama(recruit,pilihan)) {
-				frecruit(&P1,&P2,&M,&Q);
-			} else if (IsKataSama(change_unit,pilihan)) {
-				fchange_unit(&P1,&P2,&Q,&X);
-				if (CTurn==1) {
-					CurrUnit1 = X;
-				} else if (CTurn==2) {
-					CurrUnit2 = X;
+			else if (CTurn == 2) {
+				printf("\nPlayer %d's Turn\n", P2.ID);
+				printf("Cash			: "); printf("%d\n", P2.GLD);
+				printf("Income			: "); printf("%d\n", P2.INC);
+				printf("Upkeep			: "); printf("%d\n", P2.OUT);
+				printf("Unit			: ");
+				if (CurrUnit2.TYP == 'K') {
+					printf("King \n");
 				}
-			} else if (IsKataSama(attack,pilihan)) {
-				printf("pilihan\n");
-			} else if (IsKataSama(map,pilihan)) {
-				if (CTurn==1) {
-					float X1 = InfoUnit(CurrUnit1).LOC.X;
-					float Y1 = InfoUnit(CurrUnit1).LOC.Y;
-					TulisMAP(&M,X1,Y1);
-				} else if (CTurn==2) {
-					X = CurrUnit2;
-					float X2 = InfoUnit(CurrUnit1).LOC.X;
-					float Y2 = InfoUnit(CurrUnit1).LOC.Y;
-					TulisMAP(&M,X2,Y2);
+				else if (CurrUnit2.TYP == 'A') {
+					printf("Archer \n");
 				}
-			} else if (IsKataSama(info,pilihan)) {
+				else if (CurrUnit2.TYP == 'S') {
+					printf("Swordsman \n");
+				}
+				else if (CurrUnit2.TYP == 'W') {
+					printf("White Mage \n");
+				}
+				printf("Health			: "); printf("%d\n", CurrUnit2.HP);
+				printf("Movement Point		: "); printf("%d\n", CurrUnit2.MOVEPTS);
+				printf("Can Attack? ");
+				if (CurrUnit2.CHN) {
+					printf("Yes\n");
+				}
+				else {
+					printf("No\n");
+				}
+			}
+			if (IsKataSama(move, pilihan)) {
+				if (CTurn == 1) {
+					if (CurrUnit1.MOVEPTS > 0) {
+						TulisMAPJarak(&M, CurrUnit1);
+						fmove(&P1, &P2, &M, &Q, &CurrUnit1);
+					}
+					else {
+						printf("You ran out of movement points\n");
+					}
+				}
+				else if (CTurn == 2) {
+					if (CurrUnit2.MOVEPTS > 0) {
+						TulisMAPJarak(&M, CurrUnit2);
+						fmove(&P1, &P2, &M, &Q, &CurrUnit2);
+					}
+					else {
+						printf("You ran out of movement points\n");
+					}
+				}
+			}
+			else if (IsKataSama(undo, pilihan)) {
 				printf("pilihan\n");
-			} else {
+			}
+			else if (IsKataSama(recruit, pilihan)) {
+				frecruit(&P1, &P2, &M, &Q);
+			}
+			else if (IsKataSama(change_unit, pilihan)) {
+				if (CTurn == 1) {
+					CurrUnit1 = fchange_unit(P1);
+					DelP(&(P1.UNTLST), CurrUnit1);
+					InsVFirst(&P1.UNTLST, CurrUnit1);
+				}
+				else if (CTurn == 2) {
+					CurrUnit2 = fchange_unit(P2);
+					DelP(&(P2.UNTLST), CurrUnit2);
+					InsVFirst(&P2.UNTLST, CurrUnit2);
+				}
+			}
+			else if (IsKataSama(attack, pilihan)) {
+				fattack(&P1, &P2, &M, &Q);
+				CurrUnit1 = InfoUnit(FirstUnit(P1.UNTLST));
+				CurrUnit2 = InfoUnit(FirstUnit(P2.UNTLST));
+			}
+			else if (IsKataSama(map, pilihan)) {
+				if (CTurn == 1) {
+					int X1 = CurrUnit1.LOC.X;
+					int Y1 = CurrUnit1.LOC.Y;
+					TulisMAP(&M, X1, Y1);
+				}
+				else if (CTurn == 2) {
+					int X2 = CurrUnit2.LOC.X;
+					int Y2 = CurrUnit2.LOC.Y;
+					TulisMAP(&M, X2, Y2);
+				}
+
+			}
+			else if (IsKataSama(info, pilihan)) {
+				printf("pilihan\n");
+			}
+			else {
 				printf("Warning : Masukan anda salah! Ulangi!\n");
 			}
+			if (!IsEmpty(P1.UNTLST) && !IsEmpty(P2.UNTLST)) {
+				printf("\nGame Command : ");
+				InputToEksternal();
+				EksternalToInput(&pilihan);
+			} else {
+				pilihan = end_turn;
+			}
+		}
+
+		if (!IsEmpty(P1.UNTLST) && !IsEmpty(P2.UNTLST)) {
+			CurrUnit1.CHN = true;
+			CurrUnit2.CHN = true;
+			InfoUnit(FirstUnit(P1.UNTLST)).CHN = CurrUnit1.CHN;
+			InfoUnit(FirstUnit(P2.UNTLST)).CHN = CurrUnit2.CHN;
+			CurrUnit1.MOVEPTS = 2;
+			CurrUnit2.MOVEPTS = 2;
+			ChangeTurn(&Q);
+
 			printf("\nGame Command : ");
 			InputToEksternal();
 			EksternalToInput(&pilihan);
+		} else {
+			pilihan = exit;
 		}
-
-		ChangeTurn(&Q);
-
-		printf("\nGame Command : ");
-		InputToEksternal();
-		EksternalToInput(&pilihan);
 	}
+
+	checkWinner(P1.UNTLST, P2.UNTLST);
+	/*Dealokasi memory*/
+	DealokasiQ(Head(Q));
+	DealokasiQ(Tail(Q));
+	//map perlu didealokasi tapi kebanyakan dan bergantung banyaknya map
 }
 
 int main(){
