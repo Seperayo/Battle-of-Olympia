@@ -29,7 +29,6 @@ void fattack(Player *P1, Player *P2, MATRIKS *M, TurnQueue *Q) {
 		x3 = x, y3 = y + 1;
 		printf("\nPlease select enemy you want to attack : \n");
 
-<<<<<<< HEAD
 		/*Check di map*/
 		if ((x - 1) >= 0) { //check di atas CurrUnit1, ada musuh atau tidak
 			if ((Elmt((*M), x - 1, y).UNITINFO.P != 1) && (Elmt((*M), x - 1, y).UNITINFO.TYP != EMP)) {
@@ -380,7 +379,6 @@ void calculateAttack(int x, int y, Player *P1, Player *P2, MATRIKS *M, int Playe
 
 		if (prob >= PRBInt) {
 			/*Berhasil serang, lebih dari probabilty yang ada*/
-			printf("%d %d", x, y);
 			Elmt((*M), x, y).UNITINFO.HP -= MyUnit.ATK;
 			printf("Your unit attack the enemy successfully. \n");
 			printf("Enemy's HP reduced by %d. \n", MyUnit.ATK);
@@ -428,7 +426,6 @@ void calculateAttack(int x, int y, Player *P1, Player *P2, MATRIKS *M, int Playe
 
 		if (prob >= PRBInt) {
 			/*Berhasil serang, lebih dari probabilty yang ada*/
-			printf("%d", Elmt((*M), x, y).UNITINFO.HP);
 			Elmt((*M), x, y).UNITINFO.HP -= MyUnit.ATK;
 			printf("Your unit attack the enemy successfully. \n");
 			printf("Enemy's HP reduced by %d. \n", MyUnit.ATK);
@@ -481,11 +478,11 @@ void fmove(Player * P1, Player * P2, MATRIKS * M, TurnQueue * Q, Unit * U) {
     boolean valid = false;
     boolean validin = false;
 
-    while (!valid) { 
+    while (!valid) {
         printf("\nPlease enter cell's coordinate x y : ");
 	    scanf("%d %d",&MX,&MY);
         IN.X = MX;
-        IN.Y = MY;  
+        IN.Y = MY;
 
         if (IN.X == (*U).LOC.X && IN.Y - (*U).LOC.Y == 2) {
             PID = SearchID(M,IN.X,(IN.Y)-1);
@@ -546,7 +543,7 @@ void fmove(Player * P1, Player * P2, MATRIKS * M, TurnQueue * Q, Unit * U) {
 			} else if (PlayerID==2) {
 				Elmt(*M,IN.X,IN.Y).BLDINFO.ID = 2;
 				(*P2).INC += 5;
-			} 
+			}
         }
 
         //Emptying the place before moved.
@@ -569,7 +566,7 @@ void fmove(Player * P1, Player * P2, MATRIKS * M, TurnQueue * Q, Unit * U) {
         (*U).LOC.Y = IN.Y;
         (*U).MOVEPTS = (*U).MOVEPTS - Jarak;
         printf("You have successfully moved to (%d, %d)",MX,MY);
-    } 
+    }
 }
 
 void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
@@ -596,27 +593,6 @@ void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
     }
 
 	if ((Elmt(*M,x,y).UNITINFO.TYP == EMP && Elmt(*M,x,y).BLDINFO.ID == PlayerID && PlayerID==1 && Elmt(*M,NBrsEff(*M)-2,1).UNITINFO.TYP == KNG)||(Elmt(*M,x,y).UNITINFO.TYP == EMP && Elmt(*M,x,y).BLDINFO.ID == PlayerID && PlayerID==2 && Elmt(*M,1,NKolEff(*M)-2).UNITINFO.TYP == KNG)) {
-=======
-    if (PlayerID==1) {
-        printf("Enter the coordinate of empty castle = ");
-        scanf("%d %d",&x,&y);
-        while ((Elmt(*M,x,y).UNITINFO.TYP != EMP)||(Elmt(*M,x,y).BLDINFO.ID != 1)){
-            printf("That castle is occupied!!!\n");
-            printf("Enter the coordinate of empty castle = ");
-            scanf("%d %d",&x,&y);
-        }
-    } else if (PlayerID==2) {
-        printf("Enter the coordinate of empty castle = ");
-        scanf("%d %d",&x,&y);
-        while ((Elmt(*M,x,y).UNITINFO.TYP != EMP)||(Elmt(*M,x,y).BLDINFO.ID != 2)){
-            printf("That castle is occupied!!!\n");
-            printf("Enter the coordinate of empty castle = ");
-            scanf("%d %d",&x,&y);
-        }
-    }
-
-	if (Elmt(*M,x,y).UNITINFO.TYP == EMP && Elmt(*M,x,y).BLDINFO.ID == PlayerID) {
->>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
         printf("= = = = = = LIST OF RECRUITS = = = = = = \n");
         printf("1. Archer       | Health 29 | ATK 5 | 17G \n");
         printf("2. Swordsman    | Health 33 | ATK 4 | 14G \n");
@@ -650,7 +626,7 @@ void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
 			Elmt(*M,x,y).UNITINFO.CHN = true;
 			Elmt(*M,x,y).UNITINFO.PRB = PRB_ARC;
 			Elmt(*M,x,y).UNITINFO.MAXHP = MAX_HP_ARC;
-            
+
             A.MAXHP = MAX_HP_ARC;
             A.HP = MAX_HP_ARC;
             A.ATK = ATK_ARC;
@@ -672,7 +648,7 @@ void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
                 (*P2).GLD -= PRC_OF_ARC;
                 InsVFirst(&(*P2).UNTLST,A);
             }
-            
+
         } else if (i==2) {
             Elmt(*M,x,y).UNITINFO.P = PlayerID;
 	        Elmt(*M,x,y).UNITINFO.TYP = SWD;
@@ -687,7 +663,7 @@ void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
 			Elmt(*M, x, y).UNITINFO.CHN = true;
  	        Elmt(*M,x,y).UNITINFO.HP = MAX_HP_SWD;
 			Elmt(*M,x,y).UNITINFO.MAXHP = MAX_HP_SWD;
-            
+
             A.MAXHP = MAX_HP_SWD;
             A.HP = MAX_HP_SWD;
             A.ATK = ATK_SWD;
@@ -724,7 +700,7 @@ void frecruit(Player * P1, Player * P2, MATRIKS *M, TurnQueue *Q) {
 			Elmt(*M,x,y).UNITINFO.MAXHP = MAX_HP_WHT;
 			Elmt(*M, x, y).UNITINFO.CHN = true;
 			Elmt(*M, x, y).UNITINFO.PRB = PRB_WHT;
-            
+
             A.MAXHP = MAX_HP_WHT;
             A.HP = MAX_HP_WHT;
             A.ATK = ATK_WHT;
@@ -785,6 +761,22 @@ void InitializeQueue(Player * A, Player * B, MATRIKS * M, TurnQueue * Q)
     CreateEmpty(&(*B).UNTLST);
     CreateEmptyB(&(*B).VLGLST);
 
+		/*#cheat*/
+		// Unit ARC2;
+		// ARC2.MAXHP = MAX_HP_ARC;
+		// ARC2.HP = MAX_HP_ARC;
+		// ARC2.ATK = ATK_ARC;
+		// ARC2.MAXMOVE = MAX_MOVE_ARC;
+		// ARC2.MOVEPTS = MAX_MOVE_ARC;
+		// ARC2.PRC = PRC_OF_ARC;
+		// ARC2.RNGTYP = RANGE;
+		// ARC2.TYP = ARC;
+		// ARC2.PRB = PRB_ARC;
+		// ARC2.CHN = true;
+		// ARC2.P = 1;
+		// ARC2.LOC.X = NBrsEff(*M) - 1;
+		// ARC2.LOC.Y = 1;
+		// InsVFirst(&(*B).UNTLST, ARC2);
     KNG2.MAXHP = MAX_HP_KNG;
     KNG2.HP = MAX_HP_KNG;
     KNG2.ATK = ATK_KNG;
@@ -808,25 +800,13 @@ void InitializeQueue(Player * A, Player * B, MATRIKS * M, TurnQueue * Q)
     AddQ(Q,*B);
 }
 
-<<<<<<< HEAD
 Unit fchange_unit(Player P) {
-=======
-Unit fchange_unit(Player * P1, Player * P2, TurnQueue * Q) {
->>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
     int x,y,i,PlayerID;
 
     printf("\n====== LIST OF UNITS ======\n");
     PrintInfo((P).UNTLST);
     printf("Please enter the no. of unit you want to select: ");
     scanf("%d",&x);
-<<<<<<< HEAD
     return SearchX((P).UNTLST,x);
-    
-=======
-    if (PlayerID==1) {
-        return SearchX((*P1).UNTLST,x);
-    } else if (PlayerID==2) {
-        return SearchX((*P2).UNTLST,x);
-    }
->>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
+
 }

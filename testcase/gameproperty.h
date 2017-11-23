@@ -23,6 +23,6 @@ typedef struct {
 } Player;
 
 void Display();
-void Menu();
+void Menu(int *option);
 
 #endif

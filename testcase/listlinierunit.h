@@ -103,11 +103,7 @@ addressunit Search (ListUnit L, Unit X);
 /* Mencari apakah ada elemen list dengan InfoUnit(P)= X */
 /* Jika ada, mengirimkan address elemen tersebut. */
 /* Jika tidak ada, mengirimkan Nil */
-<<<<<<< HEAD
 Unit SearchUnit (ListUnit L, Unit X);
-=======
-
->>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 Unit SearchX (ListUnit L, int X);
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/

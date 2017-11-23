@@ -34,7 +34,7 @@ void InitializeMap (MATRIKS * M) {
 			}
 		}
 	}
-	
+
 	/* Player 1 */
 	Elmt(*M,B-2,1).UNITINFO.P = 1;
 	Elmt(*M,B-2,1).UNITINFO.TYP = KNG;
@@ -51,19 +51,19 @@ void InitializeMap (MATRIKS * M) {
  	Elmt(*M,B-2,1).UNITINFO.MAXHP = MAX_HP_KNG;
 
 	/*#cheat*/
-	//Elmt(*M, B - 1, 1).UNITINFO.P = 2;
-	//Elmt(*M, B - 1, 1).UNITINFO.TYP = ARC;
-	//Elmt(*M, B - 1, 1).UNITINFO.RNGTYP = RANGE;
-	//Elmt(*M, B - 1, 1).UNITINFO.PRB = PRB_ARC;
-	//Elmt(*M, B - 1, 1).UNITINFO.CHN = true;
-	//Elmt(*M, B - 1, 1).UNITINFO.PRC = PRC_OF_ARC;
-	//Elmt(*M, B - 1, 1).UNITINFO.LOC.X = B - 1;
-	//Elmt(*M, B - 1, 1).UNITINFO.LOC.Y = 1;
-	//Elmt(*M, B - 1, 1).UNITINFO.MOVEPTS = MAX_MOVE_ARC;
-	//Elmt(*M, B - 1, 1).UNITINFO.MAXMOVE = MAX_MOVE_ARC;
-	//Elmt(*M, B - 1, 1).UNITINFO.ATK = ATK_ARC;
-	//Elmt(*M, B - 1, 1).UNITINFO.HP = MAX_HP_ARC;
-	//Elmt(*M, B - 1, 1).UNITINFO.MAXHP = MAX_HP_ARC;
+	Elmt(*M, B - 1, 1).UNITINFO.P = 2;
+	Elmt(*M, B - 1, 1).UNITINFO.TYP = ARC;
+	Elmt(*M, B - 1, 1).UNITINFO.RNGTYP = RANGE;
+	Elmt(*M, B - 1, 1).UNITINFO.PRB = PRB_ARC;
+	Elmt(*M, B - 1, 1).UNITINFO.CHN = true;
+	Elmt(*M, B - 1, 1).UNITINFO.PRC = PRC_OF_ARC;
+	Elmt(*M, B - 1, 1).UNITINFO.LOC.X = B - 1;
+	Elmt(*M, B - 1, 1).UNITINFO.LOC.Y = 1;
+	Elmt(*M, B - 1, 1).UNITINFO.MOVEPTS = MAX_MOVE_ARC;
+	Elmt(*M, B - 1, 1).UNITINFO.MAXMOVE = MAX_MOVE_ARC;
+	Elmt(*M, B - 1, 1).UNITINFO.ATK = ATK_ARC;
+	Elmt(*M, B - 1, 1).UNITINFO.HP = MAX_HP_ARC;
+	Elmt(*M, B - 1, 1).UNITINFO.MAXHP = MAX_HP_ARC;
 
  	Elmt(*M,B-2,1).BLDINFO.ID = 1;
  	Elmt(*M,B-2,1).BLDINFO.LOC.X = B-2;
@@ -138,17 +138,17 @@ void InitializeMap (MATRIKS * M) {
 	int KV2 = rand() % (K + 1 - K-4) + K-4;
 	int BV3 = rand() % (B + 1 - 0) + 0;
 	int KV3 = rand() % (K-4 + 1 - 4) + 4;
-	
+
 	Elmt(*M,BV1,KV1).BLDINFO.ID = 0;
  	Elmt(*M,BV1,KV1).BLDINFO.LOC.X = BV1;
  	Elmt(*M,BV1,KV1).BLDINFO.LOC.Y = KV1;
 	Elmt(*M,BV1,KV1).BLDINFO.TYP = VLG;
-	
+
 	Elmt(*M,BV2,KV2).BLDINFO.ID = 0;
  	Elmt(*M,BV2,KV2).BLDINFO.LOC.X = BV2;
  	Elmt(*M,BV2,KV2).BLDINFO.LOC.Y = KV2;
 	Elmt(*M,BV2,KV2).BLDINFO.TYP = VLG;
-	 
+
 	Elmt(*M,BV3,KV3).BLDINFO.ID = 0;
  	Elmt(*M,BV3,KV3).BLDINFO.LOC.X = BV3;
  	Elmt(*M,BV3,KV3).BLDINFO.LOC.Y = KV3;
@@ -158,8 +158,8 @@ void InitializeMap (MATRIKS * M) {
 void TulisMAP (MATRIKS * M, int x, int y) {
 	indeks i,j,nk,nb;
 	indeks koordinatbrs = 0,koordinatkol = 0;
-	
-	nb = 4*NBrsEff(*M)+2; //jumlah total indeks baris untuk membuat Map 
+
+	nb = 4*NBrsEff(*M)+2; //jumlah total indeks baris untuk membuat Map
 	nk = 4*NKolEff(*M)+2; //jumlah total indeks kolom untuk membuat Map
 
 	if(nk!=0 && nb !=0){
@@ -251,7 +251,6 @@ void TulisMAP (MATRIKS * M, int x, int y) {
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 									print_green('A');
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
-<<<<<<< HEAD
 									print_green('S');
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
 									print_green('W');
@@ -286,8 +285,8 @@ void TulisMAP (MATRIKS * M, int x, int y) {
 void TulisMAPJarak (MATRIKS * M, Unit U) {
 	indeks i,j,nk,nb;
 	indeks koordinatbrs = 0,koordinatkol = 0;
-	
-	nb = 4*NBrsEff(*M)+2; //jumlah total indeks baris untuk membuat Map 
+
+	nb = 4*NBrsEff(*M)+2; //jumlah total indeks baris untuk membuat Map
 	nk = 4*NKolEff(*M)+2; //jumlah total indeks kolom untuk membuat Map
 
 	if(nk!=0 && nb !=0){
@@ -359,14 +358,11 @@ void TulisMAPJarak (MATRIKS * M, Unit U) {
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 									print_green('A');
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
-=======
->>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 									print_green('S');
 								} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
 									print_green('W');
 								}
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == KNG) {
-<<<<<<< HEAD
 								print_red('K');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
 								print_red('A');
@@ -393,14 +389,6 @@ void TulisMAPJarak (MATRIKS * M, Unit U) {
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
 								print_blue('S');
 							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
-=======
-								print_blue('K');
-							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == ARC) {
-								print_blue('A');
-							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == SWD) {
-								print_blue('S');
-							} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.TYP == WHT) {
->>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 								print_blue('W');
 							}
 						} else if (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.P == -1) {
@@ -408,28 +396,28 @@ void TulisMAPJarak (MATRIKS * M, Unit U) {
 								int PID = SearchID(M,Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X,(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y)-1);
 								if ((PID == -1)||(PID == U.P)) {
 									printf("#");
-								} 
+								}
 							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X)&&(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y - U.LOC.Y == 1)) {
 								printf("#");
 							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y)&&(U.LOC.X - Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == 2)) {
 								int PID = SearchID(M,(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X)+1,Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y);
 								if ((PID == -1)||(PID == U.P)) {
 									printf("#");
-								} 
+								}
 							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y)&&(U.LOC.X - Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == 1)) {
 								printf("#");
 							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X)&&(U.LOC.Y - Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == 2)) {
 								int PID = SearchID(M,Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X,(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y)+1);
 								if ((PID == -1)||(PID == U.P)) {
 									printf("#");
-								} 
+								}
 							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X)&&(U.LOC.Y - Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == 1)) {
 								printf("#");
 							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y)&&(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X - U.LOC.X == 2)) {
 								int PID = SearchID(M,(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X)-1,Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y);
 								if ((PID == -1)||(PID == U.P)) {
 									printf("#");
-								} 
+								}
 							} else if ((Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y)&&(Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X - U.LOC.X == 1)) {
 								printf("#");
 							} else if ( (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.X == U.LOC.X + 1) && (Elmt(*M,((i-4)/4),(j-4)/4).UNITINFO.LOC.Y == U.LOC.Y + 1) ) {
@@ -459,7 +447,6 @@ void TulisMAPJarak (MATRIKS * M, Unit U) {
 	}
 }
 
-<<<<<<< HEAD
 int SearchID(MATRIKS * M, int x, int y) {
 	boolean found;
 	int i,j;
@@ -480,10 +467,8 @@ int SearchID(MATRIKS * M, int x, int y) {
 	return Elmt(*M,i,j).UNITINFO.P;
 }
 
-=======
->>>>>>> aee4c82421c0974469463d1344ffa2d17989c418
 /* I.S. M terdefinisi */
-/* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
+/* F.S. Nilai M(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris
    dipisahkan sebuah spasi */
 /* Proses: Menulis nilai setiap elemen M ke layar dengan traversal per baris dan per kolom */
 /* Contoh: menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
@@ -495,11 +480,11 @@ int SearchID(MATRIKS * M, int x, int y) {
 /*
 int main(){
 	MATRIKS M;
-	
+
 	MakeMATRIKS(12,41,&M);
 	InitializeMap(&M);
 	TulisMAP(&M);
-	
+
 	return 0;
 }
 */
