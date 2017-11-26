@@ -8,4 +8,4 @@ Seperayo
 Shavalda G.
 Aldo
 
-# gcc gamefunction.c listlinierbuilding.c listlinierunit.c map.c mesinkar.c mesinkata.c point.c stackunit.c turnqueue.c maintry.c pcolor.c -o main lm
+# gcc gamefunction.c listlinierbuilding.c listlinierunit.c loadkar.c loadkata.c map.c mesinkar.c mesinkata.c point.c stackunit.c turnqueue.c maintry2.c pcolor.c -o main -lm
